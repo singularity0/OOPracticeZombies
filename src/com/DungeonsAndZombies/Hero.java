@@ -7,6 +7,7 @@ public class Hero {
     private int health;
     private int mana;
     private int manaRegenRate;
+    private boolean isAlive;
 
     Hero(String name, String title, int health, int mana, int manaRegenRate){
 
@@ -15,6 +16,7 @@ public class Hero {
         this.health = health;
         this.mana = mana;
         this.manaRegenRate = manaRegenRate;
+        this.isAlive = true;
     }
 
     public String getName(){
@@ -39,6 +41,19 @@ public class Hero {
 
     public String knownAs(){
         return this.getName() + " the " + this.getTitle();
+    }
+
+    public boolean isALive(){
+        return this.isAlive;
+    }
+
+    public boolean isAlive(){
+        return this.isAlive;
+    }
+
+    public boolean canCast(){
+        //When a hero reaches mana lower than the mana needed for the spell he knows, he cannot cast any spells
+        return false; //TODO Implement
     }
 
 
