@@ -1,22 +1,23 @@
 package com.DungeonsAndZombies;
 
 
-public class Hero {
+public class Hero extends Creature {
     private String name;
     private String title;
-    private int health;
-    private int mana;
+
     private int manaRegenRate;
-    private boolean isAlive;
+    private int initialHealth;
+    private int initialMana;
+//    private Spell heroSpell;
+    private Weapon heroWeapon;
 
-    Hero(String name, String title, int health, int mana, int manaRegenRate){
-
+    public Hero(String name, String title, int health, int mana, int manaRegenRate){
+        super(health, mana);
         this.name = name;
         this.title = title;
-        this.health = health;
-        this.mana = mana;
-        this.manaRegenRate = manaRegenRate;
-        this.isAlive = true;
+         this.manaRegenRate = manaRegenRate;
+        this.initialHealth = health;
+        this.initialMana = mana;
     }
 
     public String getName(){
@@ -27,34 +28,72 @@ public class Hero {
         return this.title;
     }
 
-    public int getHealth() {
-        return this.health;
+    public void takeMana(){
+        manaValidations();
+        this.mana += this.manaRegenRate;
     }
 
     public int getManaRegenRate() {
         return this.manaRegenRate;
     }
 
-    public int getMana() {
-        return this.mana;
+//    public Spell getHeroSpell(){return this.heroSpell;}
+
+    public Weapon getHeroWeapon(){return this.heroWeapon;};
+
+    public void takeHealing(int healingPoints){
+        this.health += healingPoints;
+
+        if (this.health > initialHealth){
+            this.health = initialHealth;
+        }
     }
 
     public String knownAs(){
         return this.getName() + " the " + this.getTitle();
     }
 
-    public boolean isALive(){
-        return this.isAlive;
+    public void takeDamage(int damagePoints){
+        this.health -= damagePoints;
+
+        if (this.health < 0){
+            this.health = 0;
+        }
+
+        if (this.health == 0){
+            this.isAlive = false;
+        }
     }
 
-    public boolean isAlive(){
-        return this.isAlive;
+    public void moveHero(String direction){
+        takeMana();
+
     }
 
-    public boolean canCast(){
-        //When a hero reaches mana lower than the mana needed for the spell he knows, he cannot cast any spells
-        return false; //TODO Implement
+
+    public void takeMana(int manaPoints){
+        manaValidations();
+        this.mana += manaPoints;
     }
+
+    private void manaValidations(){
+        if (this.mana > this.initialMana){
+            this.mana = this.initialMana;
+        }
+
+        if (this.mana < 0){
+            this.mana = 0;
+        }
+    }
+
+    public void equip(Weapon someWeapon){
+        this.heroWeapon = someWeapon;
+    }
+
+    public void learn(Spell someSpell){
+        this.spell = someSpell;
+    }
+
 
 
 }
